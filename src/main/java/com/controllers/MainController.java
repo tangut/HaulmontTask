@@ -6,12 +6,10 @@ import com.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.Map;
-
 
 @Controller
 public class MainController {
@@ -36,9 +34,12 @@ public class MainController {
 
     @PostMapping("/main")
     public String addClient(@RequestParam String name, @RequestParam String phoneNumber, @RequestParam String email,
-                            @RequestParam String passportNumber, Map<String, Object> model){
-        Client client = new Client(name, phoneNumber, email, passportNumber);
-        clientService.addClient(client);
+                            @RequestParam String passportNumber){
+        if (!StringUtils.isEmpty(name) && !StringUtils.isEmpty(phoneNumber) && !StringUtils.isEmpty(email)
+        && !StringUtils.isEmpty(passportNumber)) {
+            Client client = new Client(name, phoneNumber, email, passportNumber);
+            clientService.addClient(client);
+        }
         return "redirect:/main";
     }
 }

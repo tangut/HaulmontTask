@@ -36,10 +36,6 @@
                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 <span><strong>Edit</strong></span>
             </a>
-            <a href="/clientDelete/${client.clientUUID}" class="btn btn-primary a-btn-slide-text">
-                           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                            <span><strong>Delete Client</strong></span>
-                        </a>
         </div>
     </div>
     <#else>

@@ -18,6 +18,9 @@
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Edit</button>
                 </div>
+                <div class="form-group">
+                <a href="/clientDelete/${client.clientUUID}" button type="submit" class="btn btn-primary">Delete</button></a>
+                </div>
             </form>
         </div>
 <#else>
