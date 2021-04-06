@@ -32,6 +32,10 @@
         <br><span>Phone: ${client.phoneNumber}</span>
         <br><span>Mail: ${client.email}</span>
         <br><span> Passport: ${client.passportNumber}</span>
+        <br><a href="/clientEdit/${client.clientUUID}" class="btn btn-primary a-btn-slide-text">
+               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                <span><strong>Edit</strong></span>
+            </a>
         </div>
     </div>
     <#else>
