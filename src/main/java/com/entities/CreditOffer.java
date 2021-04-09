@@ -4,7 +4,7 @@ package com.entities;
 import javax.persistence.*;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -27,9 +27,16 @@ public class CreditOffer {
 
     private long summCredit;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "schedule_id")
-    private Schedule schedule;
+    @OneToMany(mappedBy = "creditOffer", fetch = FetchType.EAGER)
+    private Set<ScheduleOfPayment> scheduleOfPayments;
+
+    public Set<ScheduleOfPayment> getScheduleOfPayments() {
+        return scheduleOfPayments;
+    }
+
+    public void setScheduleOfPayments(Set<ScheduleOfPayment> scheduleOfPayments) {
+        this.scheduleOfPayments = scheduleOfPayments;
+    }
 
     public CreditOffer() {
 
@@ -43,13 +50,12 @@ public class CreditOffer {
         this.offerUUID = offerUUID;
     }
 
-    public CreditOffer(Client client, Credit credit, long summCredit, Schedule schedule) {
+    public CreditOffer(Client client, Credit credit, long summCredit, ScheduleOfPayment scheduleOfPayment) {
         this.offerId = UUID.randomUUID();
         this.offerUUID = offerId.toString();
         this.client = client;
         this.credit = credit;
         this.summCredit = summCredit;
-        this.schedule = schedule;
     }
 
     public void setClient(Client client) {
@@ -64,9 +70,6 @@ public class CreditOffer {
         this.summCredit = summCredit;
     }
 
-    public void setSchedule(Schedule schedule) {
-        this.schedule = schedule;
-    }
 
     public UUID getOfferId() {
         return offerId;
@@ -84,24 +87,4 @@ public class CreditOffer {
         return summCredit;
     }
 
-    public Schedule getSchedule() {
-        return schedule;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CreditOffer that = (CreditOffer) o;
-        return summCredit == that.summCredit &&
-                offerUUID.equals(that.offerUUID) &&
-                client.equals(that.client) &&
-                credit.equals(that.credit) &&
-                schedule.equals(that.schedule);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(offerUUID, client, credit, summCredit, schedule);
-    }
 }

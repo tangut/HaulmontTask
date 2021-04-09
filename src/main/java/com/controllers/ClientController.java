@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class MainController {
+public class ClientController {
 
     @Autowired
     ClientRepos clientRepo;
@@ -22,7 +22,7 @@ public class MainController {
 
     @GetMapping("/")
     public String greetings(){
-        return "redirect:/main";
+        return "greetings";
     }
 
     @GetMapping("/main")

@@ -39,7 +39,7 @@
         </div>
     </div>
     <#else>
-    No clients yet
+    No clients yet.
     </#list>
     </div>
 </@c.page>

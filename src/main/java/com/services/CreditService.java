@@ -13,7 +13,7 @@ public class CreditService {
     CreditRepos creditRepo;
 
 
-    public boolean addClient(Credit credit){
+    public boolean addCredit(Credit credit){
         Credit present = creditRepo.findByCreditUUID(credit.getCreditUUID());
         if (present != null) {
             return false;
@@ -23,7 +23,7 @@ public class CreditService {
         }
     }
 
-    public boolean removeClient(Credit credit){
+    public boolean removeCredit(Credit credit){
         Credit present = creditRepo.findByCreditUUID(credit.getCreditUUID());
         if (present != null){
             creditRepo.delete(present);

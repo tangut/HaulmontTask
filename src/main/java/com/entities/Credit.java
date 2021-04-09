@@ -1,11 +1,10 @@
 package com.entities;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -19,10 +18,24 @@ public class Credit {
     private String creditUUID;
 
     @NotNull
+    private String creditName;
+
+    @NotNull
     private long limit;
 
     @NotNull
     private int percent;
+
+    @OneToMany(mappedBy = "credit", fetch = FetchType.EAGER)
+    private Set<CreditOffer> creditOffers;
+
+    public Set<CreditOffer> getCreditOffers() {
+        return creditOffers;
+    }
+
+    public void setCreditOffers(Set<CreditOffer> creditOffers) {
+        this.creditOffers = creditOffers;
+    }
 
     public Credit(){
 
@@ -36,7 +49,16 @@ public class Credit {
         this.creditUUID = creditUUID;
     }
 
-    public Credit(@NotNull long limit, @NotNull int percent) {
+    public String getCreditName() {
+        return creditName;
+    }
+
+    public void setCreditName(String creditName) {
+        this.creditName = creditName;
+    }
+
+    public Credit(@NotNull long limit, @NotNull int percent, @NotNull String creditName) {
+        this.creditName = creditName;
         this.creditId = UUID.randomUUID();
         this.creditUUID = creditId.toString();
         this.limit = limit;
@@ -50,12 +72,14 @@ public class Credit {
         Credit credit = (Credit) o;
         return limit == credit.limit &&
                 percent == credit.percent &&
-                creditUUID.equals(credit.creditUUID);
+                creditUUID.equals(credit.creditUUID) &&
+                creditName.equals(credit.creditName) &&
+                Objects.equals(creditOffers, credit.creditOffers);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(creditUUID, limit, percent);
+        return Objects.hash(creditUUID, creditName, limit, percent, creditOffers);
     }
 
     public long getLimit() {

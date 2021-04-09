@@ -1,11 +1,10 @@
 package com.entities;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -31,6 +30,17 @@ public class Client {
 
     @NotNull
     private String email;
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    private Set<CreditOffer> creditOffers;
+
+    public Set<CreditOffer> getCreditOffers() {
+        return creditOffers;
+    }
+
+    public void setCreditOffers(Set<CreditOffer> creditOffers) {
+        this.creditOffers = creditOffers;
+    }
 
     @NotNull
     private String passportNumber;

@@ -1,17 +1,17 @@
 package com.entities;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "schedule")
-public class Schedule {
+@Table(name = "scheduleOfPayment")
+public class ScheduleOfPayment {
     @Id
     @GeneratedValue
     private UUID scheduleId;
@@ -19,11 +19,13 @@ public class Schedule {
     @NotNull
     private String scheduleUUID;
 
+    @Basic
+    @Temporal(TemporalType.DATE)
     @NotNull
     private Date dateOfPay;
 
     @NotNull
-    private long sum;
+    private long allSum;
 
     @NotNull
     private long sumOfBody;
@@ -31,7 +33,11 @@ public class Schedule {
     @NotNull
     private long sumOfPercent;
 
-    public Schedule(){
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "offer_id", nullable = false)
+    private CreditOffer creditOffer;
+
+    public ScheduleOfPayment(){
 
     }
 
@@ -43,11 +49,12 @@ public class Schedule {
         this.scheduleUUID = scheduleUUID;
     }
 
-    public Schedule(Date dateOfPay, long sum, long sumOfBody, long sumOfPercent) {
+    public ScheduleOfPayment(LocalDate dateOfPay, long allSum, long sumOfBody, long sumOfPercent) {
+        ZoneId zoneId = ZoneId.systemDefault();
         this.scheduleId = UUID.randomUUID();
         this.scheduleUUID = this.scheduleId.toString();
-        this.dateOfPay = dateOfPay;
-        this.sum = sum;
+        this.dateOfPay = Date.from(dateOfPay.atStartOfDay(zoneId).toInstant());;
+        this.allSum = allSum;
         this.sumOfBody = sumOfBody;
         this.sumOfPercent = sumOfPercent;
     }
@@ -56,20 +63,21 @@ public class Schedule {
         return dateOfPay;
     }
 
-    public void setDateOfPay(Date dateOfPay) {
-        this.dateOfPay = dateOfPay;
+    public void setDateOfPay(LocalDate dateOfPay) {
+        ZoneId zoneId = ZoneId.systemDefault();
+        this.dateOfPay = Date.from(dateOfPay.atStartOfDay(zoneId).toInstant());;
     }
 
     public UUID getScheduleId() {
         return scheduleId;
     }
 
-    public long getSum() {
-        return sum;
+    public long getAllSum() {
+        return allSum;
     }
 
-    public void setSum(long sum) {
-        this.sum = sum;
+    public void setAllSum(long allSum) {
+        this.allSum = allSum;
     }
 
     public long getSumOfBody() {
@@ -92,16 +100,16 @@ public class Schedule {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Schedule schedule = (Schedule) o;
-        return sum == schedule.sum &&
-                sumOfBody == schedule.sumOfBody &&
-                sumOfPercent == schedule.sumOfPercent &&
-                scheduleUUID.equals(schedule.scheduleUUID) &&
-                dateOfPay.equals(schedule.dateOfPay);
+        ScheduleOfPayment scheduleOfPayment = (ScheduleOfPayment) o;
+        return allSum == scheduleOfPayment.allSum &&
+                sumOfBody == scheduleOfPayment.sumOfBody &&
+                sumOfPercent == scheduleOfPayment.sumOfPercent &&
+                scheduleUUID.equals(scheduleOfPayment.scheduleUUID) &&
+                dateOfPay.equals(scheduleOfPayment.dateOfPay);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(scheduleUUID, dateOfPay, sum, sumOfBody, sumOfPercent);
+        return Objects.hash(scheduleUUID, dateOfPay, allSum, sumOfBody, sumOfPercent);
     }
 }
