@@ -22,7 +22,8 @@ public class ClientService {
 
     public boolean removeClient(Client client){
         Client present = clientRepo.findByClientUUID(client.getClientUUID());
-        if (present != null){
+        Client checkName = clientRepo.findByName(client.getName());
+        if (present != null && checkName != null){
             clientRepo.delete(present);
             return true;
         }

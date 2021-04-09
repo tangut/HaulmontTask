@@ -25,7 +25,8 @@ public class CreditService {
 
     public boolean removeCredit(Credit credit){
         Credit present = creditRepo.findByCreditUUID(credit.getCreditUUID());
-        if (present != null){
+        Credit checkCreditName = creditRepo.findByCreditName(credit.getCreditName());
+        if (present != null && checkCreditName != null){
             creditRepo.delete(present);
             return true;
         }

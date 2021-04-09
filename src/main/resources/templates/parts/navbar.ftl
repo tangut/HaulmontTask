@@ -12,6 +12,9 @@
              <li class="nav-item">
              <a class="nav-link" href="/creditList">CreditList</a>
              </li>
+             <li class="nav-item">
+             <a class="nav-link" href="/creditOffersList">CreditOffersList</a>
+             </li>
         </ul>
     </div>
 </nav>

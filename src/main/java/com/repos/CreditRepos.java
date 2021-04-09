@@ -1,4 +1,3 @@
-
 package com.repos;
 
 import com.entities.Credit;
@@ -10,5 +9,6 @@ import java.util.UUID;
 public interface CreditRepos extends CrudRepository<Credit, UUID> {
     Optional<Credit> findById(UUID Id);
     Credit findByCreditUUID(String creditUUID);
+    Credit findByCreditName(String creditName);
 }
 

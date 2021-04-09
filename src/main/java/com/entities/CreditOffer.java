@@ -50,7 +50,7 @@ public class CreditOffer {
         this.offerUUID = offerUUID;
     }
 
-    public CreditOffer(Client client, Credit credit, long summCredit, ScheduleOfPayment scheduleOfPayment) {
+    public CreditOffer(Client client, Credit credit, long summCredit) {
         this.offerId = UUID.randomUUID();
         this.offerUUID = offerId.toString();
         this.client = client;
