@@ -6,6 +6,8 @@ import com.entities.CreditOffer;
 import com.repos.ClientRepos;
 import com.repos.CreditOfferRepos;
 import com.repos.CreditRepos;
+import com.services.CreditOfferService;
+import com.services.CreditService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,8 @@ public class CreditOfferListController {
     @Autowired
     CreditOfferRepos creditOfferRepo;
 
+    @Autowired
+    CreditOfferService creditOfferService;
 
     @Autowired
     ClientRepos clientRepo;
@@ -39,8 +43,11 @@ public class CreditOfferListController {
         if (!StringUtils.isEmpty(nameClient) && !StringUtils.isEmpty(nameCredit) && !StringUtils.isEmpty(sumCredit)){
             Client client = clientRepo.findByName(nameClient);
             Credit credit = creditRepo.findByCreditName(nameCredit);
+            if (credit == null || client == null){
+                return "redirect:/error";
+            }
             CreditOffer creditOffer = new CreditOffer(client, credit, Long.valueOf(sumCredit));
-            creditOfferRepo.save(creditOffer);
+            creditOfferService.addCreditOffer(creditOffer);
         }
         return "redirect:/creditOffersList";
     }

@@ -4,13 +4,13 @@
 <div class="form-group mt-3">
             <form method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <class="form-control" name="nameClient" placeholder="Name of client" value = "${credit.client.name}" />
+                    <input type="text" class="form-control" name="nameClient" placeholder="Name of client" value = "${credit.client.name}">
                 </div>
                 <div class="form-group">
-                    <class="form-control" name="nameCredit" placeholder="Name of Credit" value = "${credit.credit.creditName}">
+                    <input type="text" class="form-control" name="nameCredit" placeholder="Name of Credit" value = "${credit.credit.creditName}">
                 </div>
                 <div class="form-group">
-                   <span> Sum of credit: <input type="text" class="form-control" name="summCredit" placeholder="Sum of credit" value = "${credit.summCredit}"></span>
+                    <input type="text" class="form-control" name="summCredit" placeholder="Sum of credit" value = "${credit.summCredit}">
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Edit</button>
